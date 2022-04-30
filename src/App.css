@@ -1,0 +1,39 @@
+.renk {
+  background-color: #ccc;
+  font-size: 30px;
+}
+
+.app {
+  width: 80%;
+  margin: 100px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.bottom {
+  margin-top: 50px;
+}
+.grid {
+  display: grid;
+  padding: 40px 0;
+  gap: 10px;
+  grid-template-columns: repeat(2,1fr);
+}
+.top {
+  background:linear-gradient(rgb(43, 38, 38),rgb(59, 43, 43));
+  color: wheat;
+  width: 100%;
+  padding: 50px 0;
+  text-align: center;
+  border-radius: 15px;
+}
+.grid > div {
+  background-color: #4CAF50;
+  padding: 10px;
+  text-align: left;
+  border-radius: 20px;
+  color: white;
+
+}
