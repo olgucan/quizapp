@@ -91,13 +91,37 @@ const handleclick = (a) => {
 
 const [game,setGame]=useState(true)
 const [qNumber,setQnumber]=useState(0)
-const [myanswer,setMyanswer]=useState("")
+//const [myanswer,setMyanswer]=useState("")
 const [myChecked,setMyChecked]=useState(0)
-let lastq=state.questions[qNumber]
+const [lastq,setlastQ]=useState(state.questions[qNumber])
+useEffect(()=> {
+   setlastQ(state.questions[qNumber])
+},[state,qNumber])
+//let lastq=state.questions[qNumber]
 
 const dropone = (a) => {
    setjoker(!joker)
   
+}
+const fifty= () => {
+   //let k =0
+   let l = []
+   for (let i =0;i<lastq.answers.length-1;i++){
+      
+       if (l.length===1){
+           break
+       }
+       if (lastq.answers[i].id !== state.questions[qNumber].answerId  ) {
+             l.push(state.questions[qNumber].answers[i])
+             
+       }
+       
+   }
+   let t =lastq.answers.filter(a=>a.id===lastq.answerId)
+   //l.push(t[0])
+   l=[...l,...t]
+   
+   return setlastQ({...lastq,answers:l})
 }
 
   return (
@@ -112,11 +136,13 @@ const dropone = (a) => {
             <div className='grid'>
               {
                  
-               (joker)  ?   ( lastq.answers.map(a=>(
-                      <div  key={a.id}><input   onChange={(e)=>setMyChecked(a.id)} type="radio" name={lastq.question.slice(0,4)} /> {a.title} </div>))  
+               (joker)  ?   ( lastq?.answers.map(a=>(
+                      <div  key={a.id}><input   onChange={(e)=>setMyChecked(a.id)} type="radio" name={lastq.question.slice(0,4)} /> {a.title} 
+                          
+                      </div>))  
                       )
              
-                   : [...lastq.answers.filter(t=>t.id!==lastq.answerId).slice(0,2),state.questions[qNumber].answers.find((y)=>y.id===lastq.answerId)].map(b=>(
+                   : [...lastq?.answers.filter(t=>t.id!==lastq.answerId).slice(0,2),state.questions[qNumber].answers.find((y)=>y.id===lastq.answerId)].map(b=>(
                       <div  key={b.id}><input   onChange={(e)=>setMyChecked(b.id)} type="radio" name={lastq.question.slice(0,4)} /> {b.title} </div>
                   
                 
@@ -127,6 +153,7 @@ const dropone = (a) => {
            
             </div>
              <button onClick={()=>dropone(qNumber)}  className='btn btn-info me-3'>Joker</button>
+             <button onClick={()=>fifty()}  className='btn btn-info me-3'>Joker2</button>
              <button onClick={()=>handleclick(lastq.answerId)}  className='btn btn-danger'>Submit Answer</button>
           </div>
       </div>) : ( <div> oyun bitti </div> )}
